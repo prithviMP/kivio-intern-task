@@ -1,3 +1,7 @@
+### GitHub Repository Documentation
+
+#### README.md
+
 # Scalar School of Technology Hiring Challenge
 
 Welcome to the Scalar School of Technology Hiring Challenge! We're excited to see your creativity and technical skills in action. Please read the instructions carefully and submit your projects as per the guidelines.
@@ -42,3 +46,33 @@ Welcome to the Scalar School of Technology Hiring Challenge! We're excited to se
 2. **Clone your Fork**: Clone your forked repository to your local machine.
    ```sh
    git clone https://github.com/YOUR_USERNAME/scalar-hiring-challenge.git
+   
+3. **Create a Branch**: Create a new branch for your work.
+   ```sh
+   git checkout -b your-feature-branch
+   
+4. **Commit and Push**: Commit your changes and push to your fork.
+   ```sh
+   git add .
+   git commit -m "Completed Task"
+   git push origin your-feature-branch
+   
+5. **Open a Pull Request**: Open a pull request from your branch to the main repository.
+
+## Demo Submission
+
+- Record a Loom video demonstrating the functionality of your projects.
+- Include the Loom video link in your pull request description.
+
+## Evaluation Criteria
+
+- **Creativity**: How innovative and creative are your solutions?
+- **Efficiency**: How efficiently have you implemented the tasks?
+- **Use of Existing Features**: How well have you utilized existing tools and features without reinventing the wheel?
+- **Time Taken**: How quickly have you completed the tasks?
+
+Good luck, and we look forward to your submissions!
+
+## Contact
+
+If you have any questions, feel free to reach out to us via email at [jaishika@kivio.in](mailto:jaishika@kivio.in).
