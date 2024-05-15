@@ -2,9 +2,9 @@
 
 #### README.md
 
-# Scalar School of Technology Hiring Challenge
+# Kivio Internship Hiring Challenge
 
-Welcome to the Scalar School of Technology Hiring Challenge! We're excited to see your creativity and technical skills in action. Please read the instructions carefully and submit your projects as per the guidelines.
+Welcome to the Kivio internship Hiring Challenge! We're excited to see your creativity and technical skills in action. Please read the instructions carefully and submit your projects as per the guidelines.
 
 ## Tasks
 
