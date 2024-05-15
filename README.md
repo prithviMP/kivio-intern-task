@@ -12,7 +12,7 @@ Welcome to the Kivio internship Hiring Challenge! We're excited to see your crea
 **Objective**: Convert the provided Figma design into a pixel-perfect UI using HTML, CSS, and JavaScript.
 
 **Resources**:
-- [Figma]([https://www.figma.com/](https://www.figma.com/design/og5WHizgFjQ7R6l59QWa29/LMS-APP?m=dev))
+- [Figma]([https://www.figma.com/](https://www.figma.com/design/og5WHizgFjQ7R6l59QWa29/LMS-APP?m=dev)
 - [MDN Web Docs](https://developer.mozilla.org/en-US/)
 
 ### 2. Backend Integration with Razorpay and Zoho CRM
