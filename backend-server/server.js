@@ -29,7 +29,12 @@ app.post('/', (req, res) => {
         res.status(200).json({ orderid: order.id, amount: data.amount });
         console.log(order);
     });
-})
+});
+
+app.post('/webhook', (req, res) => {
+    console.log(req.body);
+});
+
 // Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);

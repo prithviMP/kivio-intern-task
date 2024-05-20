@@ -12,12 +12,12 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         document.getElementById('button').onclick = function(e){
-            fetch('http://localhost:3000', {
+            fetch('https://kivio-intern-task.onrender.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({"amount":"2000"})
+                body: JSON.stringify({"amount":"500000"})
             })
                 .then(response => {
                     return response.json();
