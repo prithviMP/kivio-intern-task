@@ -32,8 +32,8 @@ app.post('/', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-    const data = req.body;
-    let url = 'https://www.zohoapis.com/crm/v2/Leads';
+    // const data = req.body;
+    let url = 'https://www.zohoapis.in/crm/v2/Leads';
 
     const formData = new FormData();
 
@@ -52,6 +52,7 @@ app.post('/webhook', (req, res) => {
             var data = response.data;
             console.log("Zoho CRM token: ", data);
             var token = data.access_token;
+            console.log("Token: ", token);
             let headers = {
                 Authorization : "Zoho-oauthtoken " + token
             };
