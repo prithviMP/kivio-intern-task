@@ -4,14 +4,16 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+let url = 'https://www.zohoapis.com/crm/v2/Leads';
+let headers = {
+    Authorization : "Zoho-oauthtoken 1000.ed1e9766781f62d244dfec06b03ce3f0.10af38c9a2a2e4124c7c1a965818be78"
+};
+
+let requestBody = {};
+let recordArray = [];
+
 const Razorpay = require('razorpay');
-var instance = new Razorpay({ key_id: 'rzp_test_3a5uPbXoIibKOd', key_secret: 'FIcp6dIYVCbv5IRCgjYZ7n73' })
-
-// Define a route to handle incoming GET requests
-// app.get('/', (req, res) => {
-
-//     res.send('Hello World!');
-// });
+var instance = new Razorpay({ key_id: 'rzp_test_3a5uPbXoIibKOd', key_secret: 'FIcp6dIYVCbv5IRCgjYZ7n73' });
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -32,7 +34,32 @@ app.post('/', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-    console.log(req.body);
+    const data = req.body;
+    let recordObject = {
+        'Amount': '100'
+    };
+    recordArray.push(recordObject);
+    requestBody['data'] = recordArray;
+    requestBody['trigger'] = [];
+
+    let requestDetails = {
+        method : "POST",
+        headers : headers,
+        body : JSON.stringify(requestBody),
+        encoding: "utf8",
+        throwHttpErrors : false
+    };
+
+    fetch(url, requestDetails)
+        .then(response => {
+            return response.json();
+        })
+        .then(data => {
+            console.log("Zoho CRM response: ", data);
+        })
+        .catch(error => {
+            console.error("Error sending POST request: ", error.message);
+        });
 });
 
 // Start the server
