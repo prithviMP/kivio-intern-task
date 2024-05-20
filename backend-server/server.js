@@ -59,16 +59,23 @@ app.post('/webhook', (req, res) => {
             let headers = {
                 Authorization : "Zoho-oauthtoken " + token
             };
+            // let recordObject = {
+            //     'Amount': '100'
+            // };
             let recordObject = {
-                'Amount': '100'
-            };
+                'Company': 'Zylker',
+                'Email': 'p.daly@zylker.com',
+                'Last_Name': 'Daly',
+                'First_Name': 'Paul',
+                'Lead_Status': 'Contacted',
+            }
             recordArray.push(recordObject);
             requestBody['data'] = recordArray;
             requestBody['trigger'] = [];
         
             axios.post(url, requestBody, { headers })
                 .then(data => {
-                    console.log("Zoho CRM response: ", data);
+                    console.log("Zoho CRM response: ", data.data.data);
                 })
                 .catch(error => {
                     console.error("Error sending POST request: ", error.message);
