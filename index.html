@@ -7,17 +7,19 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 </head>
 <body>
+    <input id="input">
     <button id="button">Pay</button>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
         document.getElementById('button').onclick = function(e){
+            var amount = document.getElementById('input').value;
             fetch('https://kivio-intern-task.onrender.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({"amount":"500000"})
+                body: JSON.stringify({"amount" : amount})
             })
                 .then(response => {
                     return response.json();
@@ -26,22 +28,22 @@
                     console.log(data);
                     var options = {
                 "key": "rzp_test_3a5uPbXoIibKOd", // Enter the Key ID generated from the Dashboard
-                "amount": data.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
                 "currency": "INR",
-                "name": "Acme Corp",
+                "name": "Kivio",
                 "description": "Test Transaction",
                 // "image": "https://example.com/your_logo",
-                "order_id": data.orderid, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "order_id": data.orderid,
                 "handler": function (response){
                     alert(response.razorpay_payment_id);
                     alert(response.razorpay_order_id);
                     alert(response.razorpay_signature)
                 },
-                "prefill": {
-                    "name": "Gaurav Kumar",
-                    "email": "gaurav.kumar@example.com",
-                    "contact": "9000090000"
-                },
+                // "prefill": {
+                //     "name": "Gaurav Kumar",
+                //     "email": "gaurav.kumar@example.com",
+                //     "contact": "9000090000"
+                // },
                 "notes": {
                     "address": "Razorpay Corporate Office"
                 },

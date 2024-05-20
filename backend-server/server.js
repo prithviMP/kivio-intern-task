@@ -33,9 +33,12 @@ app.post('/', (req, res) => {
 
 app.post('/webhook', (req, res) => {
     const data = req.body;
-    // if (data.event != "payment.captured") {
-    //     return;
-    // }
+    if (data.event != "payment.captured") {
+        return;
+    }
+    let email = data.payload.payment.entity.email;
+    let contact = data.payload.payment.entity.contact;
+    let amount = data.payload.payment.entity.amount;
     let url = 'https://www.zohoapis.in/crm/v2/Leads';
 
     const formData = new FormData();
@@ -64,11 +67,14 @@ app.post('/webhook', (req, res) => {
             // };
             let recordObject = {
                 'Company': 'Zylker',
-                'Email': 'p.daly@zylker.com',
-                'Last_Name': 'Daly',
+                'Email': email,
+                'Last_Name': 'hehehe',
                 'First_Name': 'Paul',
                 'Lead_Status': 'Contacted',
+                'Phone': contact,
+                'Amount': amount
             }
+
             recordArray.push(recordObject);
             requestBody['data'] = recordArray;
             requestBody['trigger'] = [];
