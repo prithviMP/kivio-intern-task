@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const axios = require('axios');
 const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,15 +34,19 @@ app.post('/', (req, res) => {
 app.post('/webhook', (req, res) => {
     const data = req.body;
     let url = 'https://www.zohoapis.com/crm/v2/Leads';
-    fetch("https://accounts.zoho.in/oauth/v2/token", {
-        method: "POST",
-        body: JSON.stringify({
-            grant_type: "authorization_code",
-            client_id: "1000.TF143AGTR341LHW9YTECNNALGZRXIA",
-            client_secret: "b78477796133112188a475790b866fe06e5296742d",
-            redirect_uri: "https://kivio-intern-task.onrender.com",
-            code: "1000.914e0037267f1bd838f238a6571859f2.648f346e0954c63a395d80d4bb56fa4d"
-        })
+
+    const formData = new FormData();
+
+    formData.append('grant_type', 'authorization_code');
+    formData.append('client_id', '1000.TF143AGTR341LHW9YTECNNALGZRXIA');
+    formData.append('client_secret', 'b78477796133112188a475790b866fe06e5296742d');
+    formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
+    formData.append('code', 'authorization_code');
+
+    axios.post("https://accounts.zoho.in/oauth/v2/token", formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
     })
         .then(response => {
             return response.json();
@@ -60,14 +65,13 @@ app.post('/webhook', (req, res) => {
             requestBody['trigger'] = [];
         
             let requestDetails = {
-                method : "POST",
                 headers : headers,
-                body : JSON.stringify(requestBody),
+                body : requestBody,
                 encoding: "utf8",
                 throwHttpErrors : false
             };
         
-            fetch(url, requestDetails)
+            axios.post(url, requestDetails)
                 .then(response => {
                     return response.json();
                 })
