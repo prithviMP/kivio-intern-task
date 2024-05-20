@@ -32,7 +32,10 @@ app.post('/', (req, res) => {
 });
 
 app.post('/webhook', (req, res) => {
-    // const data = req.body;
+    const data = req.body;
+    if (data.event != "payment.captured") {
+        return;
+    }
     let url = 'https://www.zohoapis.in/crm/v2/Leads';
 
     const formData = new FormData();
