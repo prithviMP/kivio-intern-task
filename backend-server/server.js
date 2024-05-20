@@ -4,10 +4,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-let url = 'https://www.zohoapis.com/crm/v2/Leads';
-let headers = {
-    Authorization : "Zoho-oauthtoken 1000.164e824e5c67902e6ce9bfd5d46b6c28.fb8bbc6ca5621a67af1a83d7da59fb30"
-};
+
 
 let requestBody = {};
 let recordArray = [];
@@ -35,31 +32,55 @@ app.post('/', (req, res) => {
 
 app.post('/webhook', (req, res) => {
     const data = req.body;
-    let recordObject = {
-        'Amount': '100'
-    };
-    recordArray.push(recordObject);
-    requestBody['data'] = recordArray;
-    requestBody['trigger'] = [];
-
-    let requestDetails = {
-        method : "POST",
-        headers : headers,
-        body : JSON.stringify(requestBody),
-        encoding: "utf8",
-        throwHttpErrors : false
-    };
-
-    fetch(url, requestDetails)
+    let url = 'https://www.zohoapis.com/crm/v2/Leads';
+    fetch("https://accounts.zoho.in/oauth/v2/token", {
+        method: "POST",
+        body: JSON.stringify({
+            grant_type: "authorization_code",
+            client_id: "1000.TF143AGTR341LHW9YTECNNALGZRXIA",
+            client_secret: "b78477796133112188a475790b866fe06e5296742d",
+            redirect_uri: "https://kivio-intern-task.onrender.com",
+            code: "1000.914e0037267f1bd838f238a6571859f2.648f346e0954c63a395d80d4bb56fa4d"
+        })
+    })
         .then(response => {
             return response.json();
         })
         .then(data => {
-            console.log("Zoho CRM response: ", data);
+            console.log("Zoho CRM token: ", data);
+            var token = data.access_token;
+            let headers = {
+                Authorization : "Zoho-oauthtoken " + token
+            };
+            let recordObject = {
+                'Amount': '100'
+            };
+            recordArray.push(recordObject);
+            requestBody['data'] = recordArray;
+            requestBody['trigger'] = [];
+        
+            let requestDetails = {
+                method : "POST",
+                headers : headers,
+                body : JSON.stringify(requestBody),
+                encoding: "utf8",
+                throwHttpErrors : false
+            };
+        
+            fetch(url, requestDetails)
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log("Zoho CRM response: ", data);
+                })
+                .catch(error => {
+                    console.error("Error sending POST request: ", error.message);
+                });
         })
         .catch(error => {
-            console.error("Error sending POST request: ", error.message);
-        });
+            console.error("Error getting oauth token: ", error.message);
+        })
 });
 
 // Start the server
