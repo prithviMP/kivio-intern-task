@@ -49,9 +49,7 @@ app.post('/webhook', (req, res) => {
         }
     })
         .then(response => {
-            return response.json();
-        })
-        .then(data => {
+            var data = response.data;
             console.log("Zoho CRM token: ", data);
             var token = data.access_token;
             let headers = {
