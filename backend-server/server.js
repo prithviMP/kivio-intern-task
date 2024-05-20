@@ -44,7 +44,7 @@ app.post('/webhook', (req, res) => {
     formData.append('client_id', '1000.TF143AGTR341LHW9YTECNNALGZRXIA');
     formData.append('client_secret', 'b78477796133112188a475790b866fe06e5296742d');
     formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
-    formData.append('code', '1000.104f65ccee5027a1596767061a03de94.d1683135f7e918037d6729b1ec740948');
+    formData.append('code', '1000.12fa99104a5ed604c77b28a3ac4b9123.1b4e2d93c7152eeeefa121c6dc20aff9');
 
     axios.post("https://accounts.zoho.in/oauth/v2/token", formData, {
         headers: {
@@ -66,14 +66,7 @@ app.post('/webhook', (req, res) => {
             requestBody['data'] = recordArray;
             requestBody['trigger'] = [];
         
-            let requestDetails = {
-                headers : headers,
-                body : requestBody,
-                encoding: "utf8",
-                throwHttpErrors : false
-            };
-        
-            axios.post(url, requestDetails)
+            axios.post(url, requestBody, { headers })
                 .then(data => {
                     console.log("Zoho CRM response: ", data);
                 })
