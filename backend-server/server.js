@@ -107,6 +107,7 @@ async function initializeAccessToken() {
     // let token = await fetchToken();
     // console.log("gist: ", token);
     // formData.append('code', token);
+    console.log(process.env.ZOHO_AUTH_TOKEN);
     formData.append('code', process.env.ZOHO_AUTH_TOKEN);
 
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
