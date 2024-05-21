@@ -59,7 +59,7 @@ app.post('/webhook', async (req, res) => {
         'Email': email,
         'Phone': contact,
         'Amount': amount,
-        'Last Name': name,
+        'Last_Name': name,
     }
     
     recordArray.push(recordObject);
@@ -107,7 +107,7 @@ async function initializeAccessToken() {
     // let token = await fetchToken();
     // console.log("gist: ", token);
     // formData.append('code', token);
-    formData.append('code', '1000.a96626c95a5d7e5915a3dad139238fdf.874a1ca57ba6e6ec49082bb2d4dbc157');
+    formData.append('code', process.env.ZOHO_AUTH_TOKEN);
 
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
         headers: {
