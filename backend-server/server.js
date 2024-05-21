@@ -47,7 +47,10 @@ app.post('/webhook', async (req, res) => {
     let email = webhookResponse.payload.payment.entity.email;
     let contact = webhookResponse.payload.payment.entity.contact;
     let amount = webhookResponse.payload.payment.entity.amount;
-    let name = null;
+    let name = 'Test';
+    if (webhookResponse.payload.payment.entity.card != undefined) {
+        name = webhookResponse.payload.payment.card.name;
+    }
 
     let requestBody = {};
     let recordArray = [];
@@ -55,13 +58,8 @@ app.post('/webhook', async (req, res) => {
     let recordObject = {
         'Email': email,
         'Phone': contact,
-        'Amount': amount
-    }
-    if (webhookResponse.payload.payment.entity.card != undefined) {
-        name = webhookResponse.payload.payment.card.name;
-    }
-    if (name != null || name != undefined) {
-        recordObject['First Name'] = name;
+        'Amount': amount,
+        'Last Name': name,
     }
     
     recordArray.push(recordObject);
