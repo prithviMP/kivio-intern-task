@@ -2,13 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const bodyParser = require('body-parser');
-let octokit = null;
+// let octokit = null;
 
-async function importOctokit() {
-    octokit = await import('@octokit/core');
-}
+// async function importOctokit() {
+//     octokit = await import('@octokit/core');
+// }
 
-importOctokit();
+// importOctokit();
 
 const app = express();
 app.use(cors());
@@ -83,22 +83,22 @@ app.post('/webhook', async (req, res) => {
     res.status(200).json({ message: 'Success' });
 });
 
-async function fetchToken() {
-    const { Octokit } = await import('@octokit/core');
+// async function fetchToken() {
+//     const { Octokit } = await import('@octokit/core');
 
-    const octokit = new Octokit({
-        auth: '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'
-    });
+//     const octokit = new Octokit({
+//         auth: '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'
+//     });
     
-    const response = await octokit.request('GET /gists/e89cee71842f7bdd462c1fc984f452be', {
-        gist_id: 'e89cee71842f7bdd462c1fc984f452be',
-        headers: {
-        'X-GitHub-Api-Version': '2022-11-28'
-        }
-    });
+//     const response = await octokit.request('GET /gists/e89cee71842f7bdd462c1fc984f452be', {
+//         gist_id: 'e89cee71842f7bdd462c1fc984f452be',
+//         headers: {
+//         'X-GitHub-Api-Version': '2022-11-28'
+//         }
+//     });
     
-    return response.data.files['gistfile1.txt'].content;
-}
+//     return response.data.files['gistfile1.txt'].content;
+// }
 
 async function initializeAccessToken() {
     const formData = new FormData();
@@ -106,9 +106,10 @@ async function initializeAccessToken() {
     formData.append('client_id', client_id);
     formData.append('client_secret', client_secret);
     formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
-    let token = await fetchToken();
-    console.log("gist: ", token);
-    formData.append('code', token);
+    // let token = await fetchToken();
+    // console.log("gist: ", token);
+    // formData.append('code', token);
+    formData.append('code', '1000.7d7f3835a1ad9c3b4ae915d54e52789a.41f959211a1cbfb73e8c8ae4d0be9c9a');
 
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
         headers: {
