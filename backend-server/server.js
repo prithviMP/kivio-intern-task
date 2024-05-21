@@ -67,7 +67,7 @@ app.post('/webhook', async (req, res) => {
         Authorization : "Zoho-oauthtoken " + access_token
     };
 
-    axios.post(`${Accounts_URL}/crm/v2/Leads`, requestBody, { headers })
+    axios.post(`https://zohoapis.in/crm/v2/Leads`, requestBody, { headers })
         .then(response => {
             console.log("Zoho CRM response: ", response.data.data);
         })
