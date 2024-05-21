@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <input id="input">
+    <button id="button">Pay</button>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        document.getElementById('button').onclick = function(e){
+            var amount = document.getElementById('input').value;
+            fetch('https://kivio-intern-task.onrender.com', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({"amount" : amount})
+            })
+                .then(response => {
+                    return response.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    var options = {
+                "key": "rzp_test_3a5uPbXoIibKOd", // Enter the Key ID generated from the Dashboard
+                "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                "currency": "INR",
+                "name": "Kivio",
+                "description": "Test Transaction",
+                // "image": "https://example.com/your_logo",
+                "order_id": data.orderid,
+                "handler": function (response){
+                    alert(response.razorpay_payment_id);
+                    alert(response.razorpay_order_id);
+                    alert(response.razorpay_signature)
+                },
+                // "prefill": {
+                //     "name": "Gaurav Kumar",
+                //     "email": "gaurav.kumar@example.com",
+                //     "contact": "9000090000"
+                // },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+            
+        }
+    </script>
+</body>
+</html>
