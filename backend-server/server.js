@@ -82,7 +82,7 @@ async function initializeAccessToken() {
     formData.append('client_id', client_id);
     formData.append('client_secret', client_secret);
     formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
-    formData.append('code', '1000.d596722b5e216911f8b6a46626113852.6873609e23522d99e1298f456eace835');
+    formData.append('code', '1000.3b114a065d97c30de3f095a1d87c5388.cdf6d7cc31a189524be0aea063e6cb8f');
 
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
         headers: {
