@@ -2,7 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+
 const app = express();
+app.use(cors());
+app.use(bodyParser.json());
+
 const PORT = process.env.PORT || 3000;
 
 const Razorpay = require('razorpay');
@@ -12,8 +16,8 @@ const Accounts_URL = 'https://accounts.zoho.in';
 const client_id = '1000.TF143AGTR341LHW9YTECNNALGZRXIA';
 const client_secret = 'b78477796133112188a475790b866fe06e5296742d';
 
-app.use(cors());
-app.use(bodyParser.json());
+let access_token = null;
+let refresh_token = null;
 
 app.post('/', (req, res) => {
     const data = req.body;
@@ -31,32 +35,26 @@ app.post('/', (req, res) => {
     });
 });
 
-let access_token = null;
-let refresh_token = null;
-
-initializeAccessToken();
-
 app.post('/webhook', async (req, res) => {
     const webhookResponse = req.body;
-    if (webhookResponse.event != "payment.captured") {
-        return;
-    }
-
     let email = webhookResponse.payload.payment.entity.email;
     let contact = webhookResponse.payload.payment.entity.contact;
     let amount = webhookResponse.payload.payment.entity.amount;
-    
+    let name = null;
+
     let requestBody = {};
     let recordArray = [];
     
     let recordObject = {
-        'Company': 'Zylker',
         'Email': email,
-        'Last_Name': 'hehehe',
-        'First_Name': 'Paul',
-        'Lead_Status': 'Contacted',
         'Phone': contact,
         'Amount': amount
+    }
+    if (webhookResponse.payload.payment.entity.card != undefined) {
+        name = webhookResponse.payload.payment.card.name;
+    }
+    if (name != null || name != undefined) {
+        recordObject['First Name'] = name;
     }
     
     recordArray.push(recordObject);
@@ -74,6 +72,8 @@ app.post('/webhook', async (req, res) => {
         .catch(error => {
             console.error("Error sending POST request: ", error.message);
         });
+
+    res.status(200).json({ message: 'Success' });
 });
 
 async function initializeAccessToken() {
@@ -118,54 +118,8 @@ function refreshAccessToken() {
         });
 }
 
-// Start the server
+initializeAccessToken();
+
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
-
-// API signature
-// {razorpayInstance}.{resourceName}.{methodName}(resourceId [, params])
-
-// example
-
-// instance.payments.fetch(paymentId)
-
-// instance.payments.all({
-//         from: '2016-08-01',
-//         to: '2016-08-20'
-//     }).then((response) => {
-//         // handle success
-//     }).catch((error) => {
-//         // handle error
-//     })
-
-// instance.payments.all({
-//     from: '2016-08-01',
-//     to: '2016-08-20'
-//     }, (error, response) => {
-//     if (error) {
-//         // handle error
-//     } else {
-//         // handle success
-//     }
-//     })
-
-
-
-
-//response
-// {
-// "id": "order_DBJOWzybf0sJbb",
-// "entity": "order",
-// "amount": 50000,
-// "amount_paid": 0,
-// "amount_due": 39900,
-// "currency": "INR",
-// "receipt": "order_rcptid_11",
-// "status": "created",
-// "attempts": 0,
-// "notes": [],
-// "created_at": 1566986570
-// }
-
-// extract id value and send to checkout
