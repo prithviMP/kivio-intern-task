@@ -107,7 +107,7 @@ async function initializeAccessToken() {
     // let token = await fetchToken();
     // console.log("gist: ", token);
     // formData.append('code', token);
-    formData.append('code', '1000.7d7f3835a1ad9c3b4ae915d54e52789a.41f959211a1cbfb73e8c8ae4d0be9c9a');
+    formData.append('code', '1000.a96626c95a5d7e5915a3dad139238fdf.874a1ca57ba6e6ec49082bb2d4dbc157');
 
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
         headers: {
