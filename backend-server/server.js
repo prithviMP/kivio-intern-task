@@ -87,10 +87,10 @@ async function fetchToken() {
     const { Octokit } = await import('@octokit/core');
 
     const octokit = new Octokit({
-        auth: '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'
+        auth: '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'
     });
     
-    const response = await octokit.request('GET /gists/{gist_id}', {
+    const response = await octokit.request('GET /gists/e89cee71842f7bdd462c1fc984f452be', {
         gist_id: 'e89cee71842f7bdd462c1fc984f452be',
         headers: {
         'X-GitHub-Api-Version': '2022-11-28'
