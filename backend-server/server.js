@@ -2,13 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const bodyParser = require('body-parser');
-// let octokit = null;
-
-// async function importOctokit() {
-//     octokit = await import('@octokit/core');
-// }
-
-// importOctokit();
 
 const app = express();
 app.use(cors());
@@ -81,32 +74,12 @@ app.post('/webhook', async (req, res) => {
     res.status(200).json({ message: 'Success' });
 });
 
-// async function fetchToken() {
-//     const { Octokit } = await import('@octokit/core');
-
-//     const octokit = new Octokit({
-//         auth: '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'
-//     });
-    
-//     const response = await octokit.request('GET /gists/e89cee71842f7bdd462c1fc984f452be', {
-//         gist_id: 'e89cee71842f7bdd462c1fc984f452be',
-//         headers: {
-//         'X-GitHub-Api-Version': '2022-11-28'
-//         }
-//     });
-    
-//     return response.data.files['gistfile1.txt'].content;
-// }
-
 async function initializeAccessToken() {
     const formData = new FormData();
     formData.append('grant_type', 'authorization_code');
     formData.append('client_id', client_id);
     formData.append('client_secret', client_secret);
     formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
-    // let token = await fetchToken();
-    // console.log("gist: ", token);
-    // formData.append('code', token);
     console.log(process.env.ZOHO_AUTH_TOKEN);
     formData.append('code', process.env.ZOHO_AUTH_TOKEN);
 
