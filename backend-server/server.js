@@ -34,6 +34,8 @@ app.post('/', (req, res) => {
 let access_token = null;
 let refresh_token = null;
 
+initializeAccessToken();
+
 app.post('/webhook', async (req, res) => {
     const webhookResponse = req.body;
     if (webhookResponse.event != "payment.captured") {
@@ -43,38 +45,10 @@ app.post('/webhook', async (req, res) => {
     let email = webhookResponse.payload.payment.entity.email;
     let contact = webhookResponse.payload.payment.entity.contact;
     let amount = webhookResponse.payload.payment.entity.amount;
-    let url = 'https://www.zohoapis.in/crm/v2/Leads';
-
-    if (access_token == null) {
-        const formData = new FormData();
-        formData.append('grant_type', 'authorization_code');
-        formData.append('client_id', client_id);
-        formData.append('client_secret', client_secret);
-        formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
-        formData.append('code', '1000.a16324d81765a0eb0e90dcf5ac680799.d9480c86e09f5f1d9a61279c22e4f236');
-
-        const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            }
-        });
-
-        const responseData = response.data;
-        console.log("Zoho CRM auth request response: ", responseData);
-        console.log("Token: ", responseData.access_token);
-        access_token = responseData.access_token;
-        refresh_token = responseData.refresh_token;
-
-        setInterval(refreshAccessToken, 3000000);
-    }
-
-    let headers = {
-        Authorization : "Zoho-oauthtoken " + access_token
-    };
-
+    
     let requestBody = {};
     let recordArray = [];
-
+    
     let recordObject = {
         'Company': 'Zylker',
         'Email': email,
@@ -84,12 +58,16 @@ app.post('/webhook', async (req, res) => {
         'Phone': contact,
         'Amount': amount
     }
-
+    
     recordArray.push(recordObject);
     requestBody['data'] = recordArray;
     requestBody['trigger'] = [];
+    
+    let headers = {
+        Authorization : "Zoho-oauthtoken " + access_token
+    };
 
-    axios.post(url, requestBody, { headers })
+    axios.post(`${Accounts_URL}/crm/v2/Leads`, requestBody, { headers })
         .then(response => {
             console.log("Zoho CRM response: ", response.data.data);
         })
@@ -97,6 +75,29 @@ app.post('/webhook', async (req, res) => {
             console.error("Error sending POST request: ", error.message);
         });
 });
+
+async function initializeAccessToken() {
+    const formData = new FormData();
+    formData.append('grant_type', 'authorization_code');
+    formData.append('client_id', client_id);
+    formData.append('client_secret', client_secret);
+    formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
+    formData.append('code', '1000.d596722b5e216911f8b6a46626113852.6873609e23522d99e1298f456eace835');
+
+    const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        }
+    });
+
+    const responseData = response.data;
+    console.log("Zoho CRM auth request response: ", responseData);
+    console.log("Token: ", responseData.access_token);
+    access_token = responseData.access_token;
+    refresh_token = responseData.refresh_token;
+
+    setInterval(refreshAccessToken, 3000000);
+}
 
 function refreshAccessToken() {
     const requestBody = {
