@@ -2,6 +2,13 @@ const express = require('express');
 const cors = require('cors');
 const axios = require('axios');
 const bodyParser = require('body-parser');
+let octokit = null;
+
+async function importOctokit() {
+    octokit = await import('@octokit/core');
+}
+
+importOctokit();
 
 const app = express();
 app.use(cors());
@@ -76,13 +83,32 @@ app.post('/webhook', async (req, res) => {
     res.status(200).json({ message: 'Success' });
 });
 
+async function fetchToken() {
+    const { Octokit } = await import('@octokit/core');
+
+    const octokit = new Octokit({
+        auth: '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'
+    });
+    
+    const response = await octokit.request('GET /gists/{gist_id}', {
+        gist_id: 'e89cee71842f7bdd462c1fc984f452be',
+        headers: {
+        'X-GitHub-Api-Version': '2022-11-28'
+        }
+    });
+    
+    return response.data.files['gistfile1.txt'].content;
+}
+
 async function initializeAccessToken() {
     const formData = new FormData();
     formData.append('grant_type', 'authorization_code');
     formData.append('client_id', client_id);
     formData.append('client_secret', client_secret);
     formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
-    formData.append('code', '1000.ba66b6ead1626a2c4a352b649d387a6c.5b32afe816e5197ff44f8fa4133463d9');
+    let token = await fetchToken();
+    console.log("gist: ", token);
+    formData.append('code', token);
 
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
         headers: {
