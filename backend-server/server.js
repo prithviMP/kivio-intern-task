@@ -34,6 +34,7 @@ app.post('/', (req, res) => {
 
 app.post('/webhook', async (req, res) => {
     const webhookResponse = req.body;
+    console.log("Webhook response: ", webhookResponse);
     let email = webhookResponse.payload.payment.entity.email;
     let contact = webhookResponse.payload.payment.entity.contact;
     let amount = webhookResponse.payload.payment.entity.amount;
