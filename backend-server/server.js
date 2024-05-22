@@ -10,28 +10,25 @@ app.use(bodyParser.json());
 const PORT = process.env.PORT || 3000;
 
 const Razorpay = require('razorpay');
-var instance = new Razorpay({ key_id: 'rzp_test_3a5uPbXoIibKOd', key_secret: 'FIcp6dIYVCbv5IRCgjYZ7n73' });
+var instance = new Razorpay({ key_id: process.env.RAZORPAY_KEY_ID, key_secret: process.env.RAZORPAY_KEY_SECRET });
 
 const Accounts_URL = 'https://accounts.zoho.in';
-const client_id = '1000.TF143AGTR341LHW9YTECNNALGZRXIA';
-const client_secret = 'b78477796133112188a475790b866fe06e5296742d';
 
 let access_token = null;
 let refresh_token = null;
 
 app.post('/', (req, res) => {
     const data = req.body;
-    console.log(data.amount);
+    console.log("Amount: ", data.amount);
 
     var options = {
         amount: data.amount,  // amount in the smallest currency unit
         currency: "INR",
-        receipt: "order_rcptid_11"
     };
 
     instance.orders.create(options, function(err, order) {
         res.status(200).json({ orderid: order.id, amount: data.amount });
-        console.log(order);
+        console.log("Order: ", order);
     });
 });
 
@@ -77,11 +74,10 @@ app.post('/webhook', async (req, res) => {
 async function initializeAccessToken() {
     const formData = new FormData();
     formData.append('grant_type', 'authorization_code');
-    formData.append('client_id', client_id);
-    formData.append('client_secret', client_secret);
-    formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
-    console.log(process.env.ZOHO_AUTH_TOKEN);
+    formData.append('client_id', process.env.ZOHO_CLIENT_ID);
+    formData.append('client_secret', process.env.ZOHO_CLIENT_SECRET);
     formData.append('code', process.env.ZOHO_AUTH_TOKEN);
+    formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
 
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
         headers: {

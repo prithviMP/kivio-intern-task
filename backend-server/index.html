@@ -5,60 +5,122 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Page Title</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #inputs {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+        
+        #name {
+            display: flex;
+        }
+        
+        #email {
+            text-align: left;
+        }
+
+        #pay {
+            display: flex;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
-    <input id="input">
-    <button id="button">Pay</button>
+    <div id="container">
+        <div id="inputs">
+            <div id="name">
+                <div id="first_name">
+                    <label>First Name</label>
+                    <input id="first_name_input" type="text">
+                </div>
+                <div id="last_name">
+                    <label>Last Name</label>
+                    <input id="last_name_input" type="text">
+                </div>
+            </div>
+            <div id="email">
+                <label>Email</label>
+                <input id="email_input" type="email">
+            </div>
+            <div id="contact">
+                <label>Contact</label>
+                <input id="contact_input" type="tel">
+            </div>
+            <div id="amount">
+                <label>Amount</label>
+                <input id="amount_input" type="number">
+            </div>
+            <div id="pay">
+                <button id="pay_button">Pay</button>
+            </div>
+        </div>
+    </div>
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        document.getElementById('button').onclick = function(e){
-            var amount = document.getElementById('input').value;
+        document.getElementById('pay_button').onclick = function(e){
+            var firstName = document.getElementById('first_name_input').value;
+            var lastName = document.getElementById('last_name_input').value;
+            var email = document.getElementById('email_input').value;
+            var contact = document.getElementById('contact_input').value;
+            var amount = document.getElementById('amount_input').value;
             fetch('https://kivio-intern-task.onrender.com', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({"amount" : amount})
-            })
+                body: JSON.stringify({"amount" : amount}),
+                })
                 .then(response => {
                     return response.json();
                 })
                 .then(data => {
                     console.log(data);
                     var options = {
-                "key": "rzp_test_3a5uPbXoIibKOd", // Enter the Key ID generated from the Dashboard
-                "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-                "currency": "INR",
-                "name": "Kivio",
-                "description": "Test Transaction",
-                // "image": "https://example.com/your_logo",
-                "order_id": data.orderid,
-                "handler": function (response){
-                    alert(response.razorpay_payment_id);
-                    alert(response.razorpay_order_id);
-                    alert(response.razorpay_signature)
-                },
-                // "prefill": {
-                //     "name": "Gaurav Kumar",
-                //     "email": "gaurav.kumar@example.com",
-                //     "contact": "9000090000"
-                // },
-                "notes": {
-                    "address": "Razorpay Corporate Office"
-                },
-                "theme": {
-                    "color": "#3399cc"
-                }
-            };
-            var rzp1 = new Razorpay(options);
-            rzp1.open();
-            e.preventDefault();
+                        "key": process.env.RAZORPAY_KEY_ID,
+                        "amount": amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                        "currency": "INR",
+                        "name": "Kivio",
+                        "description": "Test Transaction",
+                        "order_id": data.orderid,
+                        "handler": function (response){
+                            alert(response.razorpay_payment_id);
+                            alert(response.razorpay_order_id);
+                            alert(response.razorpay_signature)
+                        },
+                        "prefill": {
+                            "name": firstName + " " + lastName,
+                            "email": email,
+                            "contact": contact
+                        },
+                        "notes": {
+                            "address": "Razorpay Corporate Office"
+                        },
+                        "theme": {
+                            "color": "#3399cc"
+                        }
+                    };
+                    var rzp1 = new Razorpay(options);
+                    rzp1.open();
+                    e.preventDefault();
                 })
                 .catch(error => {
                     console.error(error);
                 });
-            
         }
     </script>
 </body>
