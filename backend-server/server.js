@@ -17,6 +17,7 @@ const Accounts_URL = 'https://accounts.zoho.in';
 let access_token = null;
 let refresh_token = null;
 
+// Route to create a new order
 app.post('/', (req, res) => {
     const data = req.body;
     console.log("Amount: ", data.amount);
@@ -32,26 +33,32 @@ app.post('/', (req, res) => {
     });
 });
 
+// Route to handle webhook responses
 app.post('/webhook', async (req, res) => {
     const webhookResponse = req.body;
     console.log("Webhook response: ", webhookResponse);
-    console.log("Webhook response payment entity: ", webhookResponse.payload.payment.entity);
-    let email = webhookResponse.payload.payment.entity.email;
-    let contact = webhookResponse.payload.payment.entity.contact;
-    let amount = webhookResponse.payload.payment.entity.amount;
-    let name = 'Test';
-    if (webhookResponse.payload.payment.entity.card != undefined) {
-        name = webhookResponse.payload.payment.card.name;
+
+    const paymentData = webhookResponse.payload.payment.entity;
+    console.log("Webhook response payment entity: ", paymentData);
+
+    let name = paymentData.notes.first_name + " " + paymentData.notes.last_name;
+    // Use card information if available
+    if (paymentData.card != undefined) {
+        name = paymentData.card.name;   
     }
 
+    let email = paymentData.email;
+    let contact = paymentData.contact;
+    let amount = paymentData.amount;
+    
     let requestBody = {};
     let recordArray = [];
     
     let recordObject = {
+        'Last_Name': name,
         'Email': email,
         'Phone': contact,
         'Amount': amount,
-        'Last_Name': name,
     }
     
     recordArray.push(recordObject);
@@ -62,12 +69,13 @@ app.post('/webhook', async (req, res) => {
         Authorization : "Zoho-oauthtoken " + access_token
     };
 
+    // Sending a POST request to Zoho CRM API to create a new lead
     axios.post(`https://zohoapis.in/crm/v2/Leads`, requestBody, { headers })
         .then(response => {
             console.log("Zoho CRM response: ", response.data.data);
         })
         .catch(error => {
-            console.error("Error sending POST request: ", error.message);
+            console.error("Error sending POST request to Zoho CRM Leads API: ", error.message);
         });
 
     res.status(200).json({ message: 'Success' });
@@ -75,12 +83,14 @@ app.post('/webhook', async (req, res) => {
 
 async function initializeAccessToken() {
     const formData = new FormData();
+
     formData.append('grant_type', 'authorization_code');
     formData.append('client_id', process.env.ZOHO_CLIENT_ID);
     formData.append('client_secret', process.env.ZOHO_CLIENT_SECRET);
     formData.append('code', process.env.ZOHO_AUTH_TOKEN);
     formData.append('redirect_uri', 'https://kivio-intern-task.onrender.com');
 
+    // Sending a POST request to Zoho Accounts API to get the access token
     const response = await axios.post(`${Accounts_URL}/oauth/v2/token`, formData, {
         headers: {
             'Content-Type': 'multipart/form-data',
@@ -89,7 +99,7 @@ async function initializeAccessToken() {
 
     const responseData = response.data;
     console.log("Zoho CRM auth request response: ", responseData);
-    console.log("Token: ", responseData.access_token);
+    console.log("Zoho CRM access token: ", responseData.access_token);
     access_token = responseData.access_token;
     refresh_token = responseData.refresh_token;
 
@@ -104,6 +114,7 @@ function refreshAccessToken() {
         grant_type: 'refresh_token'
     };
 
+    // Sending a POST request to Zoho Accounts API to refresh the access token
     axios.post(`${Accounts_URL}/oauth/v2/token`, requestBody)
         .then(response => {
             const responseData = response.data;
@@ -111,7 +122,7 @@ function refreshAccessToken() {
             access_token = responseData.access_token;
         })
         .catch(error => {
-            console.error('Error sending POST request for refreshing token:', error.message);
+            console.error('Error sending POST request for refreshing token: ', error.message);
         });
 }
 

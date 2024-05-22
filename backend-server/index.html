@@ -72,7 +72,7 @@
 
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        document.getElementById('pay_button').onclick = function(e){
+        document.getElementById('pay_button').onclick = function(e) {
             var firstName = document.getElementById('first_name_input').value;
             var lastName = document.getElementById('last_name_input').value;
             var email = document.getElementById('email_input').value;
@@ -97,7 +97,7 @@
                         "name": "Kivio",
                         "description": "Test Transaction",
                         "order_id": data.orderid,
-                        "handler": function (response){
+                        "handler": function (response) {
                             alert(response.razorpay_payment_id);
                             alert(response.razorpay_order_id);
                             alert(response.razorpay_signature)
@@ -108,7 +108,8 @@
                             "contact": contact
                         },
                         "notes": {
-                            "address": "Razorpay Corporate Office"
+                            "first_name": firstName,
+                            "last_name": lastName
                         },
                         "theme": {
                             "color": "#3399cc"
