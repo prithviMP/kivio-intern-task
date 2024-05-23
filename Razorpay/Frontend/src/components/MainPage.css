@@ -1,0 +1,34 @@
+.main-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 2%;
+  }
+  
+  .main-page-left {
+    flex: 1;
+    padding-right: 2%;
+  }
+  
+  .main-page-left h1 {
+    font-size: 2.5em;
+    margin-bottom: 2%;
+  }
+  
+  .main-page-left p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    padding: 2%;
+    padding-right: 10%;
+  }
+  
+  .main-page-right {
+    flex: 1;
+    max-width: 50%;
+  }
+  
+  .carousel .slide img {
+    max-height: 400px;
+    width: auto;
+  }
+  
