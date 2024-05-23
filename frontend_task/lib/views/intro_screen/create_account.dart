@@ -78,7 +78,9 @@ class CreateAccountView extends StatelessWidget {
                   left: 24.w,
                   width: 327.w,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/onboarding_screen_9');
+                      },
                       style: customButtonStyle(
                           0xffFFC107,
                           EdgeInsets.symmetric(
@@ -98,7 +100,9 @@ class CreateAccountView extends StatelessWidget {
                     top: 770.h,
                     left: 163.w,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/login_screen_1');
+                      },
                       child: Text(
                         "LOG IN",
                         style: TextStyle(

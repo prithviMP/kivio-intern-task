@@ -30,7 +30,6 @@ class LoginScreen1View extends StatelessWidget {
                     top: 358.h,
                     left: 24.w,
                     width: 327.w,
-                    // height: 114.r,
                     child: Column(
                       children: [
                         RichText(
@@ -60,7 +59,6 @@ class LoginScreen1View extends StatelessWidget {
                           textAlign: TextAlign.center,
                           text: TextSpan(
                               style: TextStyle(
-                                  // height: 1.3,
                                   height: 19.5 / 15.spMin,
                                   fontSize: 15.spMin,
                                   fontFamily: 'Open Sans',
@@ -94,7 +92,6 @@ class LoginScreen1View extends StatelessWidget {
                       children: [
                         SizedBox(
                           width: 327.w,
-                          // height: 52.h,
                           child: TextButton(
                               onPressed: () {},
                               style: customButtonStyle(
@@ -123,7 +120,6 @@ class LoginScreen1View extends StatelessWidget {
                         10.verticalSpace,
                         SizedBox(
                           width: 327.w,
-                          // height: 52.h,
                           child: TextButton(
                               onPressed: () {},
                               style: customButtonStyle(
@@ -160,26 +156,13 @@ class LoginScreen1View extends StatelessWidget {
                         12.verticalSpace,
                         SizedBox(
                           width: 327.w,
-                          // height: 52.h,
                           child: TextButton(
                               onPressed: () {},
-                              style: /* ButtonStyle(
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                    const Color(0xffFFC107)),
-                                padding:
-                                    WidgetStateProperty.all(EdgeInsets.zero),
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15.r),
-                                  ),
-                                ),
-                              ), */
-                                  customButtonStyle(
-                                      0xffffc107,
-                                      EdgeInsets.symmetric(
-                                          vertical: 18.h, horizontal: 16.w),
-                                      15),
+                              style: customButtonStyle(
+                                  0xffffc107,
+                                  EdgeInsets.symmetric(
+                                      vertical: 18.h, horizontal: 16.w),
+                                  15),
                               child: Text(
                                 "Create Account",
                                 style: TextStyle(

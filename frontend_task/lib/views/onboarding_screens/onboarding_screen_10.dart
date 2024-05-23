@@ -29,7 +29,9 @@ class OnboardingScreen10View extends StatelessWidget {
                     width: 34.w,
                     height: 16.h,
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pushNamed(context, '/login_screen_2');
+                      },
                       child: Text(
                         "Skip!",
                         style: TextStyle(
@@ -108,7 +110,9 @@ class OnboardingScreen10View extends StatelessWidget {
                   left: 24.w,
                   width: 327.w,
                   child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/onboarding_screen_11');
+                      },
                       style: customButtonStyle(
                           0xffFFC107,
                           EdgeInsets.symmetric(
