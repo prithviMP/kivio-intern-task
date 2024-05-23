@@ -1,0 +1,89 @@
+< !DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Razorpay + Zoho Integration</title>
+    </head>
+
+    <body>
+        <div><button id="buy-now-btn">Buy Now</button></div>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    </body>
+    <script>
+        const buyButton = document.getElementById('buy-now-btn');
+        const BACKEND = "<BACKEND_URL>";
+
+        buyButton.addEventListener('click', async (event) => {
+            const sum = 100;
+
+            const response = await fetch(BACKEND + '/order', {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+
+                ,
+                body: JSON.stringify({
+
+                    amount: sum,
+                    user: {
+                        "firstName": "<USER_FIRST_NAME>",
+                        "lastName": "<USER_LAST_NAME>",
+                        "email": "<USER_EMAIL>",
+                        "phone": "<USER_PHONE>"
+                    }
+                })
+            });
+
+            const responseJson = await response.json();
+
+            const {
+                order
+            }
+
+                = responseJson;
+
+            const razorPayOptions = {
+
+                key: '<RAZORPAY_CLIENT_ID>',
+                amount: sum,
+                currency: 'INR',
+                name: `<SAMPLE_NAME>`,
+                description: `<SAMPLE_DESCRIPTION>`,
+                order_id: order.id,
+                handler: async function (response) {
+                    // handler function when payment is successfull
+                    const razorpayPaymentId = response['razorpay_payment_id'];
+                    const razorpayOrderId = response['razorpay_order_id'];
+                    const razorpaySignature = response['razorpay_signature'];
+
+                    const lead = await fetch(BACKEND + "/lead", {
+
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+
+                        ,
+                        body: JSON.stringify({
+                            "order": order,
+                            "razorpayPaymentResponse": response
+                        })
+                    })
+                }
+
+                ,
+            }
+
+                ;
+
+            const razorpayInstance = new Razorpay(razorPayOptions);
+            razorpayInstance.open();
+
+        });
+    </script>
+
+    </html>

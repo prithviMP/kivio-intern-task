@@ -1,21 +1,6 @@
-### GitHub Repository Documentation
-
-#### README.md
-
 # Kivio Internship Hiring Challenge
 
-Welcome to the Kivio internship Hiring Challenge! We're excited to see your creativity and technical skills in action. Please read the instructions carefully and submit your projects as per the guidelines.
-
-## Tasks
-
-### 1. Figma to Pixel-Perfect UI Conversion
-**Objective**: Convert the provided Figma design into a pixel-perfect UI using HTML, CSS, and JavaScript.
-
-**Resources**:
-- [Figma]([App Design)](https://www.figma.com/design/og5WHizgFjQ7R6l59QWa29/LMS-APP?m=dev)
-- [MDN Web Docs](https://developer.mozilla.org/en-US/)
-
-### 2. Backend Integration with Razorpay and Zoho CRM
+### Backend Integration with Razorpay and Zoho CRM
 **Objective**: Implement a backend that handles payments via Razorpay, captures them through a webhook, and stores the details as leads in Zoho CRM.
 
 **Resources**:
@@ -24,55 +9,60 @@ Welcome to the Kivio internship Hiring Challenge! We're excited to see your crea
 - [Zoho CRM API](https://www.zoho.com/crm/developer/docs/api/v2/)
 - [Express.js](https://expressjs.com/)
 
-### 3. AI-based Video Analytics for Cricket Run-Out Detection
-**Objective**: Develop an AI tool that analyzes cricket match videos to automatically detect run-outs.
 
-**Resources**:
-- [OpenAI API](https://beta.openai.com/)
-- [Hugging Face Models](https://huggingface.co/models)
-- [TensorFlow](https://www.tensorflow.org/)
-- [Kaggle](https://www.kaggle.com/)
+### Assignment Details
 
-### 4. Create an AI Avatar (Bonus Task)
-**Objective**: Use an AI tool to create a conversational avatar of a specified individual.
+I have implemented a backend service which is integrated with Zoho CRM and Razorpay.
 
-**Resources**:
-- [Synthesia](https://www.synthesia.io/)
-- [Google Text-to-Speech](https://cloud.google.com/text-to-speech)
+### Workflow
 
-## Submission Instructions
+1. First user will click the Pay button on the frontend, this will create a Razorpay order for the specified amount.
 
-1. **Fork this Repository**: Click on the fork button at the top-right corner of this page.
-2. **Clone your Fork**: Clone your forked repository to your local machine.
-   ```sh
-   git clone https://github.com/YOUR_USERNAME/scalar-hiring-challenge.git
-   
-3. **Create a Branch**: Create a new branch for your work.
-   ```sh
-   git checkout -b your-feature-branch
-   
-4. **Commit and Push**: Commit your changes and push to your fork.
-   ```sh
-   git add .
-   git commit -m "Completed Task"
-   git push origin your-feature-branch
-   
-5. **Open a Pull Request**: Open a pull request from your branch to the main repository.
+2. The user then proceeds with the payment.
 
-## Demo Submission
+3. Once the payment is compelted successfully, the the transactions details are added to the request payload and this is order is migrated to Zoho CRM as a lead for that user.
 
-- Record a Loom video demonstrating the functionality of your projects.
-- Include the Loom video link in your pull request description.
+### Assumptions
 
-## Evaluation Criteria
+For the purpose of this project, I have only implemented payment service and Lead creation service in the backend, as mentioned in the assignment.
 
-- **Creativity**: How innovative and creative are your solutions?
-- **Efficiency**: How efficiently have you implemented the tasks?
-- **Use of Existing Features**: How well have you utilized existing tools and features without reinventing the wheel?
-- **Time Taken**: How quickly have you completed the tasks?
+### Setup and Installation
 
-Good luck, and we look forward to your submissions!
+To run this project, follow the given steps:-
 
-## Contact
+1. Create a account on Razorpay and generate `API key` and `API secret`.
 
-If you have any questions, feel free to reach out to us via email at [jaishika@kivio.in](mailto:jaishika@kivio.in).
+2. Create a account on Zoho CRM and Zoho API Console and generate a client `Client ID`, `Client Secret`, `Refresh Token`, and `Access Token`.
+
+3. Copy the `.env.example` into `.env` and populate the variables.
+
+4. Install the required packages
+```
+npm install
+```
+
+5. Run the following command to start the server
+```
+npm start
+```
+
+Additionally, you can run the `sample.index.html` to test your setup. You need to fill the following details to run the webpage
+
+```
+BACKEND URL
+USER FIRST NAME
+USER LAST NAME
+USER EMAIL
+USER PHONE
+RAZORPAY CLIENT ID
+SAMPLE NAME
+SAMPLE DESCRIPTION
+```
+
+Out of these `BACKEND_URL` and `RAZORPAY_CLIENT_ID` is mandatory.
+
+Upon clicking on the `Pay Now` button, a razorpay prompt will open and you should be able to if your account is activated and runnning. If everything is configured correctly, these details and additional details generated from razorpay will be added as Leads to Zoho CRM.
+
+### Contributor
+
+This service was written by Paramjeet Kaur Matharu for the Kivio Internship Hiring Challange.
