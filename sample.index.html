@@ -13,7 +13,7 @@
     </body>
     <script>
         const buyButton = document.getElementById('buy-now-btn');
-        const BACKEND = "http://localhost:3000";
+        const BACKEND = "<BACKEND_URL>";
 
         buyButton.addEventListener('click', async (event) => {
             const sum = 100;
@@ -44,7 +44,7 @@
                 order
             }
 
-            = responseJson;
+                = responseJson;
 
             const razorPayOptions = {
 
@@ -54,31 +54,31 @@
                 name: `<SAMPLE_NAME>`,
                 description: `<SAMPLE_DESCRIPTION>`,
                 order_id: order.id,
-                handler: async function(response) {
-                        // handler function when payment is successfull
-                        const razorpayPaymentId = response['razorpay_payment_id'];
-                        const razorpayOrderId = response['razorpay_order_id'];
-                        const razorpaySignature = response['razorpay_signature'];
+                handler: async function (response) {
+                    // handler function when payment is successfull
+                    const razorpayPaymentId = response['razorpay_payment_id'];
+                    const razorpayOrderId = response['razorpay_order_id'];
+                    const razorpaySignature = response['razorpay_signature'];
 
-                        const lead = await fetch(BACKEND + "/lead", {
+                    const lead = await fetch(BACKEND + "/lead", {
 
-                            method: 'POST',
-                            headers: {
-                                "Content-Type": "application/json"
-                            }
+                        method: 'POST',
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
 
-                            ,
-                            body: JSON.stringify({
-                                "order": order,
-                                "razorpayPaymentResponse": response
-                            })
+                        ,
+                        body: JSON.stringify({
+                            "order": order,
+                            "razorpayPaymentResponse": response
                         })
-                    }
+                    })
+                }
 
-                    ,
+                ,
             }
 
-            ;
+                ;
 
             const razorpayInstance = new Razorpay(razorPayOptions);
             razorpayInstance.open();
