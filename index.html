@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,6 +8,7 @@
         body, html {
             height: 100%;
             margin: 0;
+            font-family: Arial, sans-serif;
         }
         #wrapper {
             display: flex;
@@ -69,7 +68,7 @@
                 <input id="contact" type="tel">
             </div>
             <div class="inputGroup">
-                <label for="amount">Amount</label>
+                <label for="amount">Amount (in Rupees)</label>
                 <input id="amount" type="number">
             </div>
             <button id="payButton">Pay</button>
@@ -85,8 +84,8 @@
             const email = document.getElementById('email').value;
             const contact = document.getElementById('contact').value;
             const amount = document.getElementById('amount').value;
-            
-            fetch('https://your-server-url/create-order', {
+
+            fetch('https://kivio-intern-task-6.onrender.com/create-order', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -96,7 +95,7 @@
             .then(response => response.json())
             .then(data => {
                 const options = {
-                    key: 'rzp_test_3a5uPbXoIibKOd',
+                    key: 'rzp_test_h3InY5pgI9JIa5',
                     amount: amount * 100,
                     currency: "INR",
                     name: "Kivio",
