@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "instant-voyager-424107-n8",
+  "private_key_id": "135516f63c8b32bb1b557c08f742686e3c24f83b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrUH0Z35MElT/M\ny26riHNHTHM8EH2YVKC8DRne2mJUCUeiHE/uaABoqPhC8KVCU+GGjmTU3jIRuEdb\nNVSZSZFvjQaHu9mokIGk1TRNQq3MXuHt/xWrXYAqtqSa/uBXbvyn1jL+/gV+lZRK\nkgyDRpHPrjSKumfsA2+NiHHyERLadktkZoUF69L5+6shK3xrPxHRQbnJoHRZbhK9\nUloXG+qAZr2YeXci8tUaBMgL4+mtjAfDWOIywwLb4QkoBVgJWVjg5qCREU25maY8\nAf7aMf48FG5WEkTyAfQqkrkj0z/wS5rSZueFfQ2l6ZnyH21YWdBYxO/GtEswJJLp\nx09/V4IRAgMBAAECggEAB12zgb0xIzI1pynogGI8FRWhvAEetvUm+h77Sa+mXBdD\nQYjdHCxtnawFcxj8yhbOn7+X101JTHJZ4xj7O7uqXLUGhSfCSpl4Cy0KdCrI5Ull\n7OeznoXFLbdi6X7KPG6U8rSAYDvU4z+UO9NlMiNpJphgQV/737qGfXvsUx+0nOvS\nEXlBSCYMZXjrWqJ/b8UJ3HxfhITpJC2nR83GSQNEEcXt4mzadKoCb0eC0XTr4NaK\nS+fQAVPDYQSHKKghj1vBA8NrA5xPCqtojJ2dSGOekhGP5+Oyl+ZYIuWbX3smKIPp\nLQYLuy7Vmqnky0js4ZS2ZLOkqT/qaXjhjCg9jTQtfwKBgQDq6Jtpkz+gLJqFmQI9\naI9/2YsqesOD+7XSsWNnlj0oSp5HxQMoJgeXGYVSe4wDzdYC529HEGrD4hEJUEvp\nFxwAQp8whsvThVyyzgdpZON9e626iVKTjsMLLzg1x6En4to0rnpJkPayayve3ubt\nu5FS6fPqnAaFHIWT0T/87ZpFJwKBgQC6sinm373kOeL7341O+bQHKwxPiu3UxHy6\n/qx3QqvNwNgJETLpCXfY8aGLqTRtg2hw33a/A/MtYV6IWhnW7CkgOjwHexWIQEer\nUk9V+4i4y/HpJmf7HrdAvLEhUXuTwQ1GxHfx/vBpyuO30x3iF0PF1ASByth3cvBw\nkgCV2zIyBwKBgQDUYJZZffIRKyJM1MfsowLR0Ol771+ijMiXAx9fALqsGcI+GsU+\n4BsOpdkeeGpe6hKpr3mwowwTquhCJmFrDCSZq6HmqofO5Yyob5LN25O82Dt6ITsS\nAwkdrIRCQwjVWchzxqbyqegP6MrSBW580o6RisimfId8gwvVV2Jllp9aEwKBgHEF\nDiy/4frZuDl2OdtHet6kBs3YcuXNFR02sz13VP438hB7IvDEVJM2o+8iPaTWWlGK\nVh6Iy5v7R/kPYnkjejoSRujYcE6Na1WhfHm2zivg+s+D+oqhK5q7IBfldgQaaGkg\n4uPSy8OfmX9dBMgsAVEvapMQMz8Mi9X57PTLP3XdAoGBAL3k5+R3i3wgNRA9VaST\nAlU9T1v0JjLRro8XWQG0KbwznC9QLe59kkjHF5Qom2sQR3G3iy1p7j8xHem296UU\nFCkwQ+7q3xw+XZBz9CDl8YL/QT8ziNcMoe++FYdbG9HMHsQFiWx7d9VTghsxsQfy\n0ZtsJ1Q1dzuoeNYn/IM6NEfx\n-----END PRIVATE KEY-----\n",
+  "client_email": "ai-avatar@instant-voyager-424107-n8.iam.gserviceaccount.com",
+  "client_id": "113097406226089819976",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/ai-avatar%40instant-voyager-424107-n8.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
